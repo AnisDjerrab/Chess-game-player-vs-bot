@@ -406,7 +406,7 @@ public class jeuDechec {
                     }
                 }
             }
-        } else if (element.get(0) == 23) {
+        } else if (element.get(0) == 13) {
             List<List<Boolean>> Array = new ArrayList<>();
             Array.add(new ArrayList<>(Arrays.asList(true, true)));
             Array.add(new ArrayList<>(Arrays.asList(true, true)));
