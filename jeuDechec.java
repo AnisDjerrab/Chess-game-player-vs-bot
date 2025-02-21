@@ -1038,8 +1038,9 @@ public class jeuDechec {
                 for (JPanel e : carte.keySet()) {
                     if (carte.get(e).get(0) != 0) {
                         List<Integer> listeSecondaire = ex.calculeInDangerCasesBlack(carte, carte.get(e), List.of(75, 25)); 
-                        for (int o = 0; o < listeSecondaire.size(); o++) {
-                            listePrimaire.add(listeSecondaire.get(o));
+                        listePrimaire.addAll(listeSecondaire);
+                        if (listeSecondaire.contains(p)) {
+                            break;
                         }
                     }
                 }
@@ -1813,11 +1814,13 @@ public class jeuDechec {
                     for (JPanel p : panneaux.keySet()) {
                         if (panneaux.get(p).get(0) == 20 || panneaux.get(p).get(0) == 21 || panneaux.get(p).get(0) == 22 || panneaux.get(p).get(0) == 23 || panneaux.get(p).get(0) == 24 || panneaux.get(p).get(0) == 25) {
                             List<Integer> temporaire = ex.calculeConcernedCases(panneaux, panneaux.get(p));
+                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
                             listeDeListeTemporaire.addAll(temporaire);
                             if (!temporaire.isEmpty()) {
                                 break;
                             }
                             temporaire = ex.calculeInDangerCases(panneaux, panneaux.get(p), List.of(15, 75));
+                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
                             listeDeListeTemporaire.addAll(temporaire);
                             if (!temporaire.isEmpty()) {
                                 break;
