@@ -1810,26 +1810,7 @@ public class jeuDechec {
                         }
                         frame.repaint();
                     }
-                    List<Integer> listeDeListeTemporaire = new ArrayList<>();
-                    for (JPanel p : panneaux.keySet()) {
-                        if (panneaux.get(p).get(0) == 20 || panneaux.get(p).get(0) == 21 || panneaux.get(p).get(0) == 22 || panneaux.get(p).get(0) == 23 || panneaux.get(p).get(0) == 24 || panneaux.get(p).get(0) == 25) {
-                            List<Integer> temporaire = ex.calculeConcernedCases(panneaux, panneaux.get(p));
-                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
-                            listeDeListeTemporaire.addAll(temporaire);
-                            if (!temporaire.isEmpty()) {
-                                break;
-                            }
-                            temporaire = ex.calculeInDangerCases(panneaux, panneaux.get(p), List.of(15, 75));
-                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
-                            listeDeListeTemporaire.addAll(temporaire);
-                            if (!temporaire.isEmpty()) {
-                                break;
-                            }
-                        }
-                    }
-                    if (listeDeListeTemporaire.isEmpty()) {
-                        HumainAPerdu.set(0, true);
-                    }
+                    boolean Humain0APerdu = false;
                     int number = 0;
                     for (JPanel element : panneaux.keySet()) { 
                         if (panneaux.get(element).get(0) == 24) {
@@ -1873,6 +1854,7 @@ public class jeuDechec {
                                 danger.addAll(temporaire);
                             }
                             if (danger.contains(number)) {
+                                Humain0APerdu = true;
                                 element.setBackground(new Color(255, 45, 15));
                             }
                             element.repaint();
@@ -1888,6 +1870,30 @@ public class jeuDechec {
                             element.repaint();
                         }
                         number++;
+                    }
+                    List<Integer> listeDeListeTemporaire = new ArrayList<>();
+                    for (JPanel p : panneaux.keySet()) {
+                        if (panneaux.get(p).get(0) == 20 || panneaux.get(p).get(0) == 21 || panneaux.get(p).get(0) == 22 || panneaux.get(p).get(0) == 23 || panneaux.get(p).get(0) == 24 || panneaux.get(p).get(0) == 25) {
+                            List<Integer> temporaire = ex.calculeConcernedCases(panneaux, panneaux.get(p));
+                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
+                            listeDeListeTemporaire.addAll(temporaire);
+                            if (!temporaire.isEmpty()) {
+                                break;
+                            }
+                            temporaire = ex.calculeInDangerCases(panneaux, panneaux.get(p), List.of(15, 75));
+                            temporaire = ex.menaceQueen(panneaux, panneaux.get(p), temporaire);
+                            listeDeListeTemporaire.addAll(temporaire);
+                            if (!temporaire.isEmpty()) {
+                                break;
+                            }
+                        }
+                    }
+                    if (listeDeListeTemporaire.isEmpty()) {
+                        if (Humain0APerdu) {
+                            HumainAPerdu.set(0, true);
+                        } else {
+                            CoupsInactifs.set(0, 200);
+                        }
                     }
                     if (CoupsInactifs.get(0) > 150 || HumainAPerdu.get(0) == true || RobotAPerdu.get(0) == true) {
                         JPanel overley = new JPanel();
